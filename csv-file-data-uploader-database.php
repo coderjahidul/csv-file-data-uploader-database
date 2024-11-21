@@ -14,10 +14,27 @@ if ( ! defined( 'ABSPATH' ) ) {
     exit;
 }
 
+// Include content-rewrite file
+require_once( __DIR__ . '/content-rewrite.php' );
+
 // Admin menu to add the CSV Import page
 add_action( 'admin_menu', 'csv_import_menu' );
 function csv_import_menu() {
     add_menu_page( 'CSV Import', 'CSV Import', 'manage_options', 'csv-import', 'csv_import_page' );
+}
+
+
+// Admin submenu to add the Content Rewrite
+add_action( 'admin_menu', 'content_rewrite_menu' );
+function content_rewrite_menu() {
+    add_submenu_page(
+        'csv-import', // Parent slug (attaches to the "CSV Import" menu)
+        'Content Rewrite', // Page title
+        'Content Rewrite', // Menu title
+        'manage_options', // Capability
+        'content-rewrite', // Menu slug
+        'content_rewrite_page' // Callback function
+    );
 }
 
 // Admin page for the plugin
